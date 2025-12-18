@@ -9,15 +9,15 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 shadow-lg">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+          <Link href="/" className="flex items-center space-x-2 group">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center group-hover:bg-primary/90 transition-colors shadow-[0_0_15px_rgba(185,28,28,0.5)]">
               <span className="text-2xl">🎫</span>
             </div>
-            <span className="text-white font-bold text-xl tracking-tight">
+            <span className="text-foreground font-bold text-xl tracking-tight group-hover:text-primary transition-colors">
               EventConnect
             </span>
           </Link>
@@ -26,7 +26,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/"
-              className="text-white/90 hover:text-white transition-colors font-medium"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium"
             >
               Events
             </Link>
@@ -34,17 +34,17 @@ export default function Navbar() {
               <>
                 <Link
                   href="/my-bookings"
-                  className="text-white/90 hover:text-white transition-colors font-medium"
+                  className="text-muted-foreground hover:text-primary transition-colors font-medium"
                 >
                   My Bookings
                 </Link>
                 <div className="flex items-center space-x-4">
-                  <span className="text-white/80 text-sm">
-                    Hi, {user?.name?.split(' ')[0]}
+                  <span className="text-muted-foreground text-sm">
+                    Hi, <span className="text-foreground font-semibold">{user?.name?.split(' ')[0]}</span>
                   </span>
                   <button
                     onClick={logout}
-                    className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all font-medium backdrop-blur-sm"
+                    className="bg-secondary/20 hover:bg-secondary/30 text-secondary-foreground border border-secondary/50 px-4 py-2 rounded-lg transition-all font-medium backdrop-blur-sm"
                   >
                     Logout
                   </button>
@@ -54,13 +54,13 @@ export default function Navbar() {
               <div className="flex items-center space-x-3">
                 <Link
                   href="/login"
-                  className="text-white/90 hover:text-white transition-colors font-medium"
+                  className="text-muted-foreground hover:text-primary transition-colors font-medium"
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="bg-white text-rose-600 hover:bg-rose-50 px-5 py-2 rounded-lg transition-all font-semibold shadow-md"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 px-5 py-2 rounded-lg transition-all font-semibold shadow-[0_0_10px_rgba(185,28,28,0.3)] hover:shadow-[0_0_15px_rgba(185,28,28,0.5)]"
                 >
                   Sign Up
                 </Link>
@@ -71,7 +71,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-white p-2"
+            className="md:hidden text-foreground p-2 hover:text-primary transition-colors"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
@@ -85,11 +85,11 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/20">
-            <div className="flex flex-col space-y-3">
+          <div className="md:hidden py-4 border-t border-border bg-background/95 backdrop-blur-xl">
+            <div className="flex flex-col space-y-3 px-4">
               <Link
                 href="/"
-                className="text-white/90 hover:text-white transition-colors font-medium py-2"
+                className="text-muted-foreground hover:text-primary transition-colors font-medium py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Events
@@ -98,7 +98,7 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/my-bookings"
-                    className="text-white/90 hover:text-white transition-colors font-medium py-2"
+                    className="text-muted-foreground hover:text-primary transition-colors font-medium py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     My Bookings
@@ -108,7 +108,7 @@ export default function Navbar() {
                       logout();
                       setIsMenuOpen(false);
                     }}
-                    className="text-left text-white/90 hover:text-white transition-colors font-medium py-2"
+                    className="text-left text-muted-foreground hover:text-primary transition-colors font-medium py-2"
                   >
                     Logout
                   </button>
@@ -117,14 +117,14 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/login"
-                    className="text-white/90 hover:text-white transition-colors font-medium py-2"
+                    className="text-muted-foreground hover:text-primary transition-colors font-medium py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Login
                   </Link>
                   <Link
                     href="/signup"
-                    className="text-white/90 hover:text-white transition-colors font-medium py-2"
+                    className="text-primary hover:text-primary/80 transition-colors font-medium py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign Up
@@ -138,3 +138,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

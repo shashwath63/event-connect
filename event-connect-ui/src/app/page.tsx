@@ -76,17 +76,19 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-rose-500 via-pink-600 to-purple-700 text-white">
-        <div className="absolute inset-0 bg-black/20" />
+      <section className="relative bg-gradient-to-br from-primary/20 via-background to-secondary/20 text-foreground overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
               Discover Unforgettable
-              <span className="block text-yellow-300">Experiences</span>
+              <span className="block text-primary drop-shadow-[0_0_10px_rgba(185,28,28,0.8)] animate-pulse">Experiences</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               From electrifying concerts to thrilling sports events, find and book tickets to the best experiences in your city.
             </p>
 
@@ -99,28 +101,21 @@ export default function HomePage() {
                     placeholder="Search events, artists, venues..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-5 py-4 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-4 focus:ring-white/30 outline-none text-lg"
+                    className="w-full px-5 py-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none text-lg backdrop-blur-sm transition-all"
                   />
-                  <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
                 <button
                   type="submit"
-                  className="px-8 py-4 bg-gray-900 hover:bg-gray-800 rounded-xl font-semibold transition-colors"
+                  className="px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl font-semibold transition-all shadow-[0_0_15px_rgba(185,28,28,0.4)] hover:shadow-[0_0_25px_rgba(185,28,28,0.6)]"
                 >
                   Search
                 </button>
               </div>
             </form>
           </div>
-        </div>
-
-        {/* Wave Decoration */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 50L60 45.7C120 41 240 33 360 35.3C480 38 600 51 720 55.8C840 61 960 56 1080 48.5C1200 41 1320 30 1380 24.7L1440 19V100H1380C1320 100 1200 100 1080 100C960 100 840 100 720 100C600 100 480 100 360 100C240 100 120 100 60 100H0V50Z" fill="#f9fafb"/>
-          </svg>
         </div>
       </section>
 
@@ -129,10 +124,13 @@ export default function HomePage() {
 
       {/* All Events */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 border-b border-border pb-6">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">All Events</h2>
-            <p className="text-gray-600 mt-1">Browse our complete collection of upcoming events</p>
+            <h2 className="text-3xl font-bold text-foreground flex items-center">
+              <span className="w-2 h-8 bg-primary mr-3 rounded-sm shadow-[0_0_10px_rgba(185,28,28,0.8)]"></span>
+              All Events
+            </h2>
+            <p className="text-muted-foreground mt-1 ml-5">Browse our complete collection of upcoming events</p>
           </div>
 
           {/* Category Filter */}
@@ -141,10 +139,10 @@ export default function HomePage() {
               <button
                 key={category}
                 onClick={() => handleCategoryChange(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
                   selectedCategory === category || (category === 'All' && !selectedCategory)
-                    ? 'bg-rose-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-primary text-primary-foreground border-primary shadow-[0_0_10px_rgba(185,28,28,0.5)]'
+                    : 'bg-muted/30 text-muted-foreground border-border hover:bg-muted hover:text-foreground hover:border-primary/50'
                 }`}
               >
                 {category}
@@ -157,21 +155,21 @@ export default function HomePage() {
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-md animate-pulse">
-                <div className="h-48 bg-gray-200" />
+              <div key={i} className="bg-card rounded-2xl overflow-hidden shadow-md animate-pulse border border-border">
+                <div className="h-48 bg-muted" />
                 <div className="p-5 space-y-3">
-                  <div className="h-5 bg-gray-200 rounded w-3/4" />
-                  <div className="h-4 bg-gray-200 rounded w-1/2" />
-                  <div className="h-4 bg-gray-200 rounded w-2/3" />
+                  <div className="h-5 bg-muted rounded w-3/4" />
+                  <div className="h-4 bg-muted rounded w-1/2" />
+                  <div className="h-4 bg-muted rounded w-2/3" />
                 </div>
               </div>
             ))}
           </div>
         ) : events.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">🎭</div>
-            <h3 className="text-xl font-semibold text-gray-900">No events found</h3>
-            <p className="text-gray-600 mt-2">Try adjusting your search or filter criteria</p>
+          <div className="text-center py-16 border border-dashed border-border rounded-3xl bg-muted/10">
+            <div className="text-6xl mb-4 opacity-50">🎭</div>
+            <h3 className="text-xl font-semibold text-foreground">No events found</h3>
+            <p className="text-muted-foreground mt-2">Try adjusting your search or filter criteria</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -184,3 +182,4 @@ export default function HomePage() {
     </div>
   );
 }
+
