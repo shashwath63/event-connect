@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd event-connect-ui && npm run build",
-  "outputDirectory": "event-connect-ui/.next",
-  "installCommand": "cd event-connect-ui && npm install",
-  "framework": "nextjs"
-}
