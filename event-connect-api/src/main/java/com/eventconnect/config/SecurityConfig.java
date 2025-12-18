@@ -1,6 +1,7 @@
 package com.eventconnect.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +29,9 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Value("${spring.mvc.cors.allowed-origins}")
+    private String allowedOrigins;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -54,7 +59,17 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:*", "http://127.0.0.1:*"));
+
+        // Parse allowed origins from environment variable (comma-separated)
+        List<String> originPatterns = new ArrayList<>();
+        for (String origin : allowedOrigins.split(",")) {
+            originPatterns.add(origin.trim());
+        }
+        // Always allow localhost patterns for development
+        originPatterns.add("http://localhost:*");
+        originPatterns.add("http://127.0.0.1:*");
+
+        configuration.setAllowedOriginPatterns(originPatterns);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
@@ -76,3 +91,4 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
+
