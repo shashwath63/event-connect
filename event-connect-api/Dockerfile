@@ -1,12 +1,10 @@
 # Build stage
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM maven:3.9-eclipse-temurin-17-alpine AS build
 WORKDIR /app
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
-RUN chmod +x mvnw
-RUN ./mvnw dependency:go-offline -B
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 COPY src/ src/
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:17-jre-alpine
@@ -14,4 +12,4 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 ENV PORT=8080
-ENTRYPOINT ["java", "-Xmx256m", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx256m", "-Dserver.port=${PORT}", "-jar", "app.jar"]
